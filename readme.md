@@ -17,13 +17,13 @@ This dashboard is a drilldown from dashboard 1. This is host specific allowing y
 This dashboard monitors and checks for all logins in a Windows envirnment.
 ![3](https://user-images.githubusercontent.com/23244379/91849271-cae45f80-ec29-11ea-90f6-fea537dc50a3.png)
 
-##  Windows Security Dashboard (dashboard 4)
+## Windows Security Dashboard (dashboard 4)
 This dashboard will list out all all relevant Windows Security Events in a quick way to view. 
 
 *TODO: Create a new dashboard for specific ALERTS and add drilldowns to a host based dashboard.*
 ![4](https://user-images.githubusercontent.com/23244379/91849540-3f1f0300-ec2a-11ea-93b2-f6db1a8f2268.png)
 
-##  (dashboard 5)
+## Linux Logins (dashboard 5)
 
 
-##  (dashboard 6)
+## Linux CLI runs (dashboard 6)

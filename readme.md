@@ -23,7 +23,10 @@ This dashboard will list out all all relevant Windows Security Events in a quick
 *TODO: Create a new dashboard for specific ALERTS and add drilldowns to a host based dashboard.*
 ![4](https://user-images.githubusercontent.com/23244379/91849540-3f1f0300-ec2a-11ea-93b2-f6db1a8f2268.png)
 
-## Linux Logins (dashboard 5)
+## Linux Host Dashboard (dashboard 5)
+This dashboard was designed to be a drilldown and host overview offering lots of relevant information for the host specifically.
+![5](https://user-images.githubusercontent.com/23244379/91860333-89f44700-ec39-11ea-9e7e-6341c522d5dc.png)
 
-
-## Linux CLI runs (dashboard 6)
+## Linux Command Alerts (dashboard 6)
+This dashboard will list executed scripts and known applications and strings that may be used for malicious intent. Clicking an item drills down to  Dashboard 5
+![6](https://user-images.githubusercontent.com/23244379/91859967-0cc8d200-ec39-11ea-98cf-4c1eaaf54e4f.png)

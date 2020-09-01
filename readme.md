@@ -3,6 +3,8 @@ When I started teaching myself Splunk and saw that you could create dashboards, 
 
 The other part that inspired this was to build out a Threat Hunting envirnment for trying  to detect attacks and also learning how to not get noticed when doing red team engagments. 
 
+Be sure to drop ideas and improvements! I'm still learning and would enjoy other's viewpoints!
+
 ## Blocked Out Going Connections BY IP (dashboard 1)
 This dashboard pulls blocked outgoing connections from a firewall source and lists how many connections are going out on which ports to easily get an idea of what machine is trying to out on what port and how many times. Clicking on the dashboard opens up Dashboard 2
 ![1](https://user-images.githubusercontent.com/23244379/91845802-d040aa80-ec27-11ea-8eab-228b5d6a4f45.png)
@@ -17,6 +19,7 @@ This dashboard monitors and checks for all logins in a Windows envirnment.
 
 ##  Windows Security Dashboard (dashboard 4)
 This dashboard will list out all all relevant Windows Security Events in a quick way to view. 
+
 *TODO: Create a new dashboard for specific ALERTS and add drilldowns to a host based dashboard.*
 ![4](https://user-images.githubusercontent.com/23244379/91849540-3f1f0300-ec2a-11ea-93b2-f6db1a8f2268.png)
 

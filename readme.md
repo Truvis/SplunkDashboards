@@ -11,15 +11,16 @@ This dashboard pulls blocked outgoing connections from a firewall source and lis
 This dashboard is a drilldown from dashboard 1. This is host specific allowing you to see the IPs and port that are being reached out too. It also has quick access to the raw event logs.
 ![2](https://user-images.githubusercontent.com/23244379/91848469-b6ec2e00-ec28-11ea-809c-f88a5284f434.png)
 
-## Windows Login  (dashbord 3)
+## Windows Login (dashboard 3)
 This dashboard monitors and checks for all logins in a Windows envirnment.
 ![3](https://user-images.githubusercontent.com/23244379/91849271-cae45f80-ec29-11ea-90f6-fea537dc50a3.png)
 
+##  Windows Security Dashboard (dashboard 4)
+This dashboard will list out all all relevant Windows Security Events in a quick way to view. 
+*TODO: Create a new dashboard for specific ALERTS and add drilldowns to a host based dashboard.*
+![4](https://user-images.githubusercontent.com/23244379/91849540-3f1f0300-ec2a-11ea-93b2-f6db1a8f2268.png)
 
-##  (dashbord 4)
+##  (dashboard 5)
 
 
-##  (dashbord 5)
-
-
-##  (dashbord 6)
+##  (dashboard 6)

@@ -25,7 +25,7 @@ This dashboard will list out all all relevant Windows Security Events in a quick
 
 ## Linux Host Dashboard (dashboard 5)
 This dashboard was designed to be a drilldown and host overview offering lots of relevant information for the host specifically.
-![5](https://user-images.githubusercontent.com/23244379/91860333-89f44700-ec39-11ea-9e7e-6341c522d5dc.png)
+![5](https://user-images.githubusercontent.com/23244379/91887227-81f7cf80-ec58-11ea-96a8-282a4209bdea.png)
 
 ## Linux Command Alerts (dashboard 6)
 This dashboard will list executed scripts and known applications and strings that may be used for malicious intent. Clicking an item drills down to  Dashboard 5

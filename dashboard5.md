@@ -17,27 +17,6 @@
   <row>
     <panel>
       <table>
-        <title>Successful Logons</title>
-        <search>
-          <query>source="/var/log/secure"  host="$field1$" sourcetype=linux_secure action=success  vendor_action=Accepted | table _time, src_ip, src_user, | sort - _time</query>
-          <earliest>$field2.earliest$</earliest>
-          <latest>$field2.latest$</latest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
-        <format type="color" field="src_user">
-          <colorPalette type="sharedList"></colorPalette>
-          <scale type="sharedCategory"></scale>
-        </format>
-        <format type="color" field="src_ip">
-          <colorPalette type="sharedList"></colorPalette>
-          <scale type="sharedCategory"></scale>
-        </format>
-      </table>
-    </panel>
-    <panel>
-      <table>
         <title>Current Open Sessions (including improperly closed)</title>
         <search>
           <query>source="/var/log/secure" host="$field1$" | transaction pid startswith="session opened" | regex _raw!="session closed" | table _time user</query>
@@ -46,19 +25,27 @@
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="drilldown">none</option>
+        <format type="color" field="user">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
       </table>
     </panel>
     <panel>
       <table>
-        <title>Session Times (not including current)</title>
+        <title>Login Sessions</title>
         <search>
-          <query>source="/var/log/secure" host="$field1$" | transaction pid startswith="session opened" endswith="session closed" | eval HHMMSS=tostring(duration, "duration") | table _time user HHMMSS</query>
+          <query>source="/var/log/secure" host="$field1$" | transaction pid maxevents=3 endswith="session closed" | eval HHMMSS=tostring(duration, "duration") | table _time user src_ip HHMMSS</query>
           <earliest>$field2.earliest$</earliest>
           <latest>$field2.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="drilldown">none</option>
         <format type="color" field="user">
+          <colorPalette type="sharedList"></colorPalette>
+          <scale type="sharedCategory"></scale>
+        </format>
+        <format type="color" field="src_ip">
           <colorPalette type="sharedList"></colorPalette>
           <scale type="sharedCategory"></scale>
         </format>

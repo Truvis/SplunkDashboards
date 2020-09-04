@@ -34,6 +34,6 @@ This dashboard will list executed scripts and known applications and strings tha
 ## Suricata Entire Network Overview (dashboard 7)
 This dashbard gives a broad overview of the network traffic and possible threats on it. Each item is clickable and drops you down into more in-depth panels.
 
-*REQUIRES: PLUGIN:: TA-Suricata5-Truvis -- SERVER:: configured with suricata port mirror running suricata *
+*REQUIRES: PLUGIN:: TA-Suricata5-Truvis -- SERVER:: configured with suricata port mirror running suricata*
 ![7](https://user-images.githubusercontent.com/23244379/92200224-4c650900-ee47-11ea-91a2-38934aea1de7.png)
 

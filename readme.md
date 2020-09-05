@@ -1,3 +1,5 @@
+*be sure to star and follow this project if you like it. By doing so it lets me know which of my works people enjoy the most so development can be prioritized*
+
 # Dashboards
 When I started teaching myself Splunk and saw that you could create dashboards, I quickly became addicited and started building out as many ideas as I possibly could. The goal is to figure out how to package these into an app that can be quickly deployed and configured to any splunk instance.
 

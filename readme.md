@@ -47,6 +47,7 @@ Be sure to drop ideas and improvements! I'm still learning and would enjoy other
 
 ### Dashboards
 #### Suricata Network Overview [MAIN]
+*TODO: Add the ability to exclude in filter*
 ![2020_09_22_06_15_56_What_is_Penetration_Testing_Step_By_Step_Process_Methods_Imperva](https://user-images.githubusercontent.com/23244379/93870366-1fb04e80-fc9b-11ea-9ca5-6b66e0cfabde.png)
 
 #### Suricata Host Overview [SUB]

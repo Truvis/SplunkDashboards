@@ -10,6 +10,7 @@ Be sure to drop ideas and improvements! I'm still learning and would enjoy other
 - *TODO: Add colors across all dashboards*
 - *TODO: Standardize naming of fields*
 - *TODO: Add summary of what each dashboard does*
+- *TODO: List configuration settings and requirements on hosts such as index, sourcetype, source*
 
 ## Windows
 ### Configuration
@@ -84,45 +85,3 @@ Be sure to drop ideas and improvements! I'm still learning and would enjoy other
 
 ### Dashboards
 #### Threat Intelligence [MAIN]
-
-
-
-
-
-
-## Blocked Out Going Connections BY IP (dashboard 1)
-This dashboard pulls blocked outgoing connections from a firewall source and lists how many connections are going out on which ports to easily get an idea of what machine is trying to out on what port and how many times. Clicking on the dashboard opens up Dashboard 2
-![1](https://user-images.githubusercontent.com/23244379/91845802-d040aa80-ec27-11ea-8eab-228b5d6a4f45.png)
-
-## Blocked Out Going Connections FROM IP BY port (dashboard 2)
-This dashboard is a drilldown from dashboard 1. This is host specific allowing you to see the IPs and port that are being reached out too. It also has quick access to the raw event logs.
-![2](https://user-images.githubusercontent.com/23244379/91848469-b6ec2e00-ec28-11ea-809c-f88a5284f434.png)
-
-## Windows Login (dashboard 3)
-This dashboard monitors and checks for all logins in a Windows envirnment.
-![3](https://user-images.githubusercontent.com/23244379/91849271-cae45f80-ec29-11ea-90f6-fea537dc50a3.png)
-
-## Windows Security Dashboard (dashboard 4)
-This dashboard will list out all all relevant Windows Security Events in a quick way to view. 
-
-*TODO: Create a new dashboard for specific ALERTS and add drilldowns to a host based dashboard.*
-![4](https://user-images.githubusercontent.com/23244379/91849540-3f1f0300-ec2a-11ea-93b2-f6db1a8f2268.png)
-
-## Host Linux Dashboard by ENDPOINT [SUB] (dashboard 5)
-This dashboard was designed to be a drilldown and host overview offering lots of relevant information for the host specifically.
-![5](https://user-images.githubusercontent.com/23244379/91901148-d0fc2f80-ec6d-11ea-9ac8-cdf74aaad534.png)
-
-## Host Linux Security Overview [MAIN] (dashboard 6)
-This dashboard will list executed scripts and known applications and strings that may be used for malicious intent. Clicking an item drills down to  Dashboard 5
-![6](https://user-images.githubusercontent.com/23244379/91859967-0cc8d200-ec39-11ea-98cf-4c1eaaf54e4f.png)
-
-## Suricata Entire Network Overview (dashboard 7)
-This dashbard gives a broad overview of the network traffic and possible threats on it. Each item is clickable and drops you down into more in-depth panels.
-
-*REQUIRES: PLUGIN:: https://github.com/Truvis/Splunk_TA_Truvis_Suricata5 -- SERVER:: configured with port mirror running suricata*
-![7](https://user-images.githubusercontent.com/23244379/92200224-4c650900-ee47-11ea-91a2-38934aea1de7.png)
-
-## User Linux Security Overview [MAIN] (dashboard 8)
-Overview of all Linux User activity
-![2020_09_22_05_54_26_What_is_Penetration_Testing_Step_By_Step_Process_Methods_Imperva](https://user-images.githubusercontent.com/23244379/93868232-2a1d1900-fc98-11ea-9d05-9d91bd429e0c.png)
-

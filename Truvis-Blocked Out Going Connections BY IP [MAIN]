@@ -1,0 +1,57 @@
+<form theme="dark">
+  <label>Truvis-Blocked Out Going Connections BY IP [MAIN]</label>
+  <description>Blocked Out Going Connections BY IP</description>
+  <fieldset submitButton="false">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Local IPs count by blocked out going connections. (click for details)</title>
+      <chart>
+        <search>
+          <query>sourcetype="opnsense:filterlog" action=blocked src_ip="192.168.2.*" | stats count(src_ip) as TotalBlockConnctions by src_ip | sort TotalBlockConnctions desc</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="height">721</option>
+        <drilldown>
+          <link target="_blank">/app/search/blocked_out_going_connections_by_ip_and_port?clickedIP=$click.value$</link>
+        </drilldown>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>BLOCKED PORTS BY IP WITH  COUNT</title>
+      <table>
+        <search>
+          <query>sourcetype="opnsense:filterlog" action=blocked src_ip="192.168.2.*" 
+          |stats count by src_ip dest_port, transport
+          |stats list(dest_port) as port list(transport) as transport list(count) as count by src_ip
+          |rename src_ip as "SOURCE HOST" port as "DEST PORT" transport as "TRANSPORT"</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">30</option>
+        <option name="drilldown">cell</option>
+      </table>
+    </panel>
+  </row>
+</form>

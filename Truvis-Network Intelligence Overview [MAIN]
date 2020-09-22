@@ -1,0 +1,155 @@
+<form theme="dark">
+  <label>Truvis-Network Intelligence Overview [MAIN]</label>
+  <fieldset submitButton="false">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>DNS Queries per host</title>
+        <search>
+          <query>index="suricata" sourcetype="suricata:dns" | stats count by src_ip</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Connections to Risky Domains</title>
+        <search>
+          <query>index="suricata" sourcetype="suricata:dns"
+[ | inputlookup domains.csv 
+| rename bad_domain as dns.answers{}.rrname | fields dns.answers{}.rrname ] | table _time, src_ip, dns.answers{}.rrname | sort _time desc</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Connections to Risky IPs</title>
+        <search>
+          <query>index="suricata" sourcetype="suricata:dns"
+[ | inputlookup domains.csv 
+| rename bad_domain as dns.answers{}.rrname | fields dns.answers{}.rrname ] | table _time, src_ip, dns.answers{}.rrname | sort _time desc</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Risky User-Agents</title>
+        <search>
+          <query>index="suricata" sourcetype="suricata:dns"
+[ | inputlookup domains.csv 
+| rename bad_domain as dns.answers{}.rrname | fields dns.answers{}.rrname ] | table _time, src_ip, dns.answers{}.rrname | sort _time desc</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Uncommon User-Agents</title>
+        <search>
+          <query>index="suricata" sourcetype="suricata:dns"
+[ | inputlookup domains.csv 
+| rename bad_domain as dns.answers{}.rrname | fields dns.answers{}.rrname ] | table _time, src_ip, dns.answers{}.rrname | sort _time desc</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>User-Agents Seen</title>
+        <search>
+          <query>index="suricata" sourcetype="suricata:fileinfo" | stats count by http.http_user_agent | sort count desc</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">cell</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Most Active DNS Connections</title>
+        <search>
+          <query>index="suricata" sourcetype="suricata:dns" | stats count by dns.answers{}.rrname | table count, dns.answers{}.rrname | sort count desc</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Flow | Proto</title>
+        <search>
+          <query>index="suricata" sourcetype="suricata:flow" | stats count by app_proto</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0</option>
+        <option name="charting.drilldown">all</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Annomalies | Events</title>
+        <search>
+          <query>index="suricata" sourcetype="suricata:anomaly" | stats count by anomaly.event</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0</option>
+        <option name="charting.drilldown">all</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Anomalies | Protot</title>
+        <search>
+          <query>index="suricata" sourcetype="suricata:anomaly" | stats count by app_proto</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+</form>

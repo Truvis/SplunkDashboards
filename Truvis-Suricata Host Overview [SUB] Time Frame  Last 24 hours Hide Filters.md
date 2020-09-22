@@ -1,4 +1,3 @@
-```
 <form theme="dark">
   <label>Truvis-Suricata Host Overview [SUB]</label>
   <fieldset submitButton="false">
@@ -182,4 +181,3 @@
     </panel>
   </row>
 </form>
-```

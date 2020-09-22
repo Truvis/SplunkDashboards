@@ -1,3 +1,4 @@
+```
 <form theme="dark">
   <label>Truvis-Suricata Categories Overview [SUB]</label>
   <fieldset submitButton="false">
@@ -119,3 +120,4 @@
     </panel>
   </row>
 </form>
+```

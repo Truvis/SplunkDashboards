@@ -1,0 +1,242 @@
+<form theme="dark">
+  <label>Truvis-Threat Intelligence Network [MAIN]</label>
+  <fieldset submitButton="false">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Top hosts making DNS queries</title>
+      <chart>
+        <title>Capturing spikes or changes in client volumes may show early signs of data exfiltration.</title>
+        <search>
+          <query>index="suricata" message_type=Query
+| timechart limit=10 usenull=f useother=f count AS Requests by src</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Requests by Resource Record Over Time</title>
+      <chart>
+        <title>Changes in resource type behaviour for a client may point toward potential C&amp;C or exfiltration activity. Both A records and TXT records should be observed carefully as these are common techniques. However, don’t be blind-sided into just these two resource types!</title>
+        <search>
+          <query>index="suricata" message_type=Query
+| timechart span=1h count BY record_type</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Connections to Unencrypted Ports (Allowed/Blocked)</title>
+      <chart>
+        <title>These connections could contain credentials and as older protocols should be retired and blocked. (click to find hosts and raw logs)</title>
+        <search>
+          <query>host="edge.internal.truvis.cat" src="192.168.2.*" dest_port="20" OR dest_port="21" OR dest_port="23" OR dest_port="25" OR dest_port="110" OR dest_port="143" OR dest_port="1521" | stats count by dest_port</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Connections to Unencrypted Ports 139(Allowed/Blocked)</title>
+      <chart>
+        <title>Hosts making connections with NetBIOS on 139.</title>
+        <search>
+          <query>host="edge.internal.truvis.cat" src="192.168.2.*" dest_port="139" | stats count by host</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Top IPs going out to unauthorized DNS servers</title>
+      <chart>
+        <search>
+          <query>sourcetype="opnsense:filterlog" dest_port="53" src_ip!="192.168.2.15" AND src_ip!="96.58.127.84" AND src_ip!="127.0.0.1" AND dest_ip!="96.58.127.84" AND ip_version="4" | stats count by src_ip</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Devices not using local DNS server</title>
+      <table>
+        <search>
+          <query>sourcetype="opnsense:filterlog" dest_port="53" src_ip!="192.168.2.15" AND src_ip!="96.58.127.84" AND src_ip!="127.0.0.1" AND dest_ip!="96.58.127.84" AND ip_version="4" | stats count by src_ip, dest_ip | stats list(dest_ip) list(count) by src_ip</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Hosts with big queries</title>
+      <chart>
+        <search>
+          <query>index="suricata" message_type=Query
+| mvexpand query
+| eval queryLength=len(query)
+| where queryLength &gt; 90
+| stats count by src</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Big Queries</title>
+      <table>
+        <search>
+          <query>index="suricata" message_type=Query
+| mvexpand query
+| eval queryLength=len(query)
+| stats count by queryLength, src, query
+| sort -queryLength, count
+| table src query queryLength count
+| where queryLength &gt; 90</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Clients connecting to multiple DNS servers</title>
+      <table>
+        <search>
+          <query>index="suricata" message_type=Query
+| mvexpand query
+| bucket _time span=1s 
+| stats VALUES(dest_ip) AS IP_List dc(dest_ip) AS distinct by _time src_ip
+| search distinct &gt; 2
+| table src_ip IP_List distinct</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>DNS Beaconing (needs work)</title>
+      <table>
+        <title>Beaconing activity may occur when a compromised host ‘checks in’ with the command infrastructure, possibly waiting for new instructions or updates to the malicious software itself.</title>
+        <search>
+          <query>index="suricata" message_type=Query
+| mvexpand query
+| fields _time, query
+| streamstats current=f last(_time) as last_time by query
+| eval gap=last_time - _time
+| stats count avg(gap) AS AverageBeaconTime var(gap) AS VarianceBeaconTime BY query
+| eval AverageBeaconTime=round(AverageBeaconTime,3), VarianceBeaconTime=round(VarianceBeaconTime,3)
+| sort -count
+| where VarianceBeaconTime &lt; 60 AND count &gt; 2 AND AverageBeaconTime&gt;1.000
+| table  query VarianceBeaconTime  count AverageBeaconTime</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Packet Size &amp; Volume Distribution</title>
+      <chart>
+        <title>Events that have significant packet size and high volumes may identify signs of exfiltration activity.</title>
+        <search>
+          <query>index="suricata" message_type=Query
+| mvexpand query
+| eval queryLength=len(query)
+| stats count by queryLength, src
+| sort -queryLength, count
+| table src queryLength count
+| head 1000</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">scatter</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Number of Hosts Talking to Beaconing Domains</title>
+        <search>
+          <query>index="suricata" message_type=Query
+| fields _time, src, query
+| streamstats current=f last(_time) as last_time by query
+| eval gap=last_time - _time
+| stats count dc(src) AS NumHosts avg(gap) AS AverageBeaconTime var(gap) AS VarianceBeaconTime BY query
+| eval AverageBeaconTime=round(AverageBeaconTime,3), VarianceBeaconTime=round(VarianceBeaconTime,3)
+| sort –count
+| where VarianceBeaconTime &lt; 60 AND AverageBeaconTime &gt; 0</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">scatter</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Beaconing Activity</title>
+      <chart>
+        <title>Beaconing activity may occur when a compromised host ‘checks in’ with the command infrastructure, possibly waiting for new instructions or updates to the malicious software itself.</title>
+        <search>
+          <query>index="suricata" message_type=Query
+| fields _time, query
+| streamstats current=f last(_time) as last_time by query
+| eval gap=last_time - _time
+| stats count avg(gap) AS AverageBeaconTime var(gap) AS VarianceBeaconTime BY query
+| eval AverageBeaconTime=round(AverageBeaconTime,3), VarianceBeaconTime=round(VarianceBeaconTime,3)
+| sort -count
+| where VarianceBeaconTime &lt; 60 AND count &gt; 2 AND AverageBeaconTime&gt;1.000
+| table  query VarianceBeaconTime  count AverageBeaconTime</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">scatter</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+</form>

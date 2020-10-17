@@ -87,7 +87,7 @@ Be sure to drop ideas and improvements! I'm still learning and would enjoy other
 - Uses PLUGIN https://github.com/Truvis/Splunk_TA_Truvis_Linux_History
 - Uses PLUGIN https://github.com/Truvis/Splunk_TA_Truvis_Opnsense-20.1.X
 - Uses PLUGIN https://github.com/Truvis/Splunk_TA_Truvis_Zeek
-- Uses a server configured with port mirror running suricata*
+- Uses a server configured with port mirror running suricata/zeek*
 - *TODO: Breakout the bigger dashes to subs based on services for example*
 
 ### Dashboards
@@ -98,3 +98,9 @@ Be sure to drop ideas and improvements! I'm still learning and would enjoy other
 ![2020-10-17 12_33_38-root@splunk_~](https://user-images.githubusercontent.com/23244379/96348196-0a012f80-1075-11eb-978f-4ca5fbf37065.png)
 
 
+## Zeek
+### Configuration
+- Uses PLUGIN https://github.com/Truvis/Splunk_TA_Truvis_Zeek
+- Uses a server configured with port mirror running zeek*
+
+### Dashboards

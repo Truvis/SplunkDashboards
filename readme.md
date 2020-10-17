@@ -83,6 +83,18 @@ Be sure to drop ideas and improvements! I'm still learning and would enjoy other
 
 ## Threat Hutning
 ### Configuration
+- Uses PLUGIN https://github.com/Truvis/Splunk_TA_Truvis_Suricata5 
+- Uses PLUGIN https://github.com/Truvis/Splunk_TA_Truvis_Linux_History
+- Uses PLUGIN https://github.com/Truvis/Splunk_TA_Truvis_Opnsense-20.1.X
+- Uses PLUGIN https://github.com/Truvis/Splunk_TA_Truvis_Zeek
+- Uses a server configured with port mirror running suricata*
+- *TODO: Breakout the bigger dashes to subs based on services for example*
 
 ### Dashboards
-#### Threat Intelligence [MAIN]
+#### Truvis-Threat Intelligence Windows Accounts [MAIN]
+![2020-10-17 12_34_22-Truvis-Threat Intelligence Windows Accounts  MAIN  _ Splunk 8 0 5](https://user-images.githubusercontent.com/23244379/96348204-22714a00-1075-11eb-8872-83e50f9b2442.png)
+
+#### Truvis-Threat Intelligence Network [MAIN]
+![2020-10-17 12_33_38-root@splunk_~](https://user-images.githubusercontent.com/23244379/96348196-0a012f80-1075-11eb-978f-4ca5fbf37065.png)
+
+

@@ -1,0 +1,61 @@
+<form theme="dark">
+  <label>Truvis-Threat Intelligence Windows Accounts [MAIN]</label>
+  <fieldset submitButton="false">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <title>Accounts that were created and then deleted in under an hour</title>
+        <search>
+          <query>source="WinEventLog:Security" (EventCode=630 OR EventCode=4726 OR EventCode=624 OR EventCode=4720) | eval status=case(EventCode=630, "Account Deletion", EventCode=4726, "Account Deletion", EventCode=624, "Account Creation", EventCode=4720, "Account Creation") |transaction user startswith=status="Account Creation" endswith=status="Account Deletion" maxevents=2  | where duration &lt; 3600 | table host, src_user, user, Account_Domain, _time</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Accounts added/removed to Domain Admins and other sensitive groups.</title>
+        <search>
+          <query>source=WinEventLog:Security (EventCode=4728 OR EventCode=4729) (Group_Name="*Domain Admins*" OR Group_Name="*OtherGroup*")
+| rename src_user AS "Actioned By", name as "Action Taken"
+| table host "Actioned By" user "Action Taken" Group_Name Account_Domain _time
+| sort - _time</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Accounts that had their password's changed not by themselves</title>
+        <search>
+          <query>source="WinEventLog:Security" (EventCode IN ("628","627","4723","4724"))
+| eval s_username = mvindex(Account_Name, 0), t_username = mvindex(Account_Name, 1), s_domain = mvindex(Account_Domain, 0), t_domain = mvindex(Account_Domain, 1)
+| eval s_output = s_username."@".s_domain, t_output = t_username."@".t_domain
+| where s_username!=t_username
+| table host, s_output, t_output, _time</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>
